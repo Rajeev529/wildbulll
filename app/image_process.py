@@ -179,106 +179,102 @@ def images_to_pdf(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
-import cv2
-import numpy as np
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter
+from django.http import JsonResponse
+import io, base64
+
 
 def convert_to_scanned(request):
     print("\n===== START convert_to_scanned REQUEST =====")
 
-    if request.method == "POST":
-        files = request.FILES.getlist('images')
-        print(f"Total files received: {len(files)}")
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
 
-        processed_images_data = []
+    files = request.FILES.getlist("images")
+    print(f"Total files received: {len(files)}")
 
-        for idx, f in enumerate(files):
-            print(f"\n--- Processing Image #{idx+1}: {f.name} ---")
+    processed_images_data = []
 
-            try:
-                # ==========================
-                # 1. LOAD IMAGE
-                # ==========================
-                img_pil = Image.open(f)
-                img_pil.load()
-                print("Image loaded:", img_pil.mode, img_pil.size)
+    for idx, f in enumerate(files):
+        print(f"\n--- Processing Image #{idx+1}: {f.name} ---")
 
-                img_pil = ImageOps.exif_transpose(img_pil)
+        try:
+            # ==========================
+            # 1. LOAD IMAGE SAFELY
+            # ==========================
+            img = Image.open(f)
+            img.load()
+            img = ImageOps.exif_transpose(img)
 
-                # Fix modes
-                if img_pil.mode == "P":
-                    img_pil = img_pil.convert("RGBA").convert("RGB")
-                elif img_pil.mode in ("RGBA", "LA"):
-                    bg = Image.new("RGB", img_pil.size, (255,255,255))
-                    bg.paste(img_pil, mask=img_pil.split()[-1])
-                    img_pil = bg
-                else:
-                    img_pil = img_pil.convert("RGB")
+            # Fix modes safely
+            if img.mode in ("RGBA", "LA"):
+                bg = Image.new("RGB", img.size, (255, 255, 255))
+                bg.paste(img, mask=img.split()[-1])
+                img = bg
+            else:
+                img = img.convert("RGB")
 
-                print("Mode fixed:", img_pil.mode)
+            # ==========================
+            # 2. SCANNED EFFECT (PIL)
+            # ==========================
 
-                # Convert PIL → OpenCV
-                img = cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
+            # Convert to grayscale
+            gray = img.convert("L")
 
-                # ======================================================
-                # 2. SCANNING Without DESKEW (No more stretched output)
-                # ======================================================
+            # Increase contrast (important for scan look)
+            contrast = ImageEnhance.Contrast(gray)
+            gray = contrast.enhance(1.9)
 
-                print("Converting to grayscale...")
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            # Increase brightness slightly (paper look)
+            brightness = ImageEnhance.Brightness(gray)
+            gray = brightness.enhance(1.05)
 
-                print("Shadow removal...")
-                kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (17, 17))
-                bg = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, kernel)
-                diff = 255 - cv2.absdiff(gray, bg)
-
-                print("Enhancing contrast...")
-                norm = cv2.normalize(diff, None, 0, 255, cv2.NORM_MINMAX)
-
-                print("Sharpening text...")
-                sharp_kernel = np.array([[0, -1, 0],
-                                         [-1, 5, -1],
-                                         [0, -1, 0]])
-                sharp = cv2.filter2D(norm, -1, sharp_kernel)
-
-                print("Applying scan threshold...")
-                scanned = cv2.adaptiveThreshold(
-                    sharp,
-                    255,
-                    cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                    cv2.THRESH_BINARY,
-                    35,
-                    10
+            # Sharpen text (simulate scanner)
+            gray = gray.filter(
+                ImageFilter.UnsharpMask(
+                    radius=2,
+                    percent=180,
+                    threshold=3
                 )
+            )
 
-                print("Skipping deskew — prevents stretching & wrong rotation.")
+            # Thresholding (manual adaptive-like)
+            scanned = gray.point(
+                lambda x: 0 if x < 150 else 255,  # 👈 adjust for darker text
+                mode="1"
+            )
 
-                # Convert to PIL
-                scanned_pil = Image.fromarray(scanned)
+            # Convert back to grayscale (JPEG safe)
+            scanned = scanned.convert("L")
 
-                # ======================================================
-                # 3. ENCODE
-                # ======================================================
-                img_bytes = io.BytesIO()
-                scanned_pil.save(img_bytes, format="JPEG", quality=95)
-                img_bytes.seek(0)
+            # ==========================
+            # 3. SAVE & ENCODE
+            # ==========================
+            img_bytes = io.BytesIO()
+            scanned.save(img_bytes, format="JPEG", quality=95)
+            img_bytes.seek(0)
 
-                encoded = base64.b64encode(img_bytes.read()).decode("utf-8")
+            encoded = base64.b64encode(img_bytes.read()).decode("utf-8")
 
-                processed_images_data.append({
-                    "file_name": f"Scanned-{idx+1}.jpg",
-                    "base64": f"data:image/jpeg;base64,{encoded}"
-                })
+            processed_images_data.append({
+                "file_name": f"Scanned-{idx+1}.jpg",
+                "base64": f"data:image/jpeg;base64,{encoded}"
+            })
 
-                print(f"Image #{idx+1} processed successfully")
+            print(f"Image #{idx+1} processed successfully")
 
-            except Exception as e:
-                print(f"ERROR processing {f.name}: {e}")
-                return JsonResponse({"error": f"Error processing {f.name}: {str(e)}"}, status=500)
+        except Exception as e:
+            print("ERROR:", e)
+            return JsonResponse(
+                {"error": f"Error processing {f.name}: {str(e)}"},
+                status=500
+            )
 
-        print("\nAll images processed. Total:", len(processed_images_data))
-        return JsonResponse({"images": processed_images_data})
+    print("\n===== ALL IMAGES PROCESSED SUCCESSFULLY =====")
 
-    return JsonResponse({"error": "Invalid request"}, status=400)
+    return JsonResponse({
+        "images": processed_images_data
+    })
 
 
 
@@ -347,7 +343,7 @@ def convert_image_extension(request):
 import io
 import zipfile
 import base64
-import numpy as np
+
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 from django.http import JsonResponse
