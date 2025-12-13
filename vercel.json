@@ -5,9 +5,7 @@
     {
       "src": "project/wsgi.py",
       
-      
-      "use": "@ardnt/vercel-sagemaker-numpy@3.9.0", 
-      
+      "use": "@serverless-a/vercel-sagemaker-numpy@3.9.0", 
       
       "config": {
         "maxLambdaSize": "15mb", 
@@ -15,8 +13,8 @@
       }
     },
     {
-      "src": "staticfiles/**",
-      "use": "@vercel/static"
+      "src": "staticfiles/**", 
+      "use": "@vercel/static" 
     }
   ],
   "routes": [
