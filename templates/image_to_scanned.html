@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="tool-header">
+        <h1 class="text3" >Images to Scanned Image Converter – Make Images Look Like Scans </h1>
+    </div>
+    <main class="content-container">
+        <section class="reducer-container">
+
+            <input type="file" id="simg1_fileInput" accept="image/*" multiple required style="display: none;">
+
+            <div class="drag-drop-area" id="simg1_dragDropArea">
+                <p>Drag and drop image(s) to convert to a scanned look, or click to browse</p>
+            </div>
+
+            <div class="config-area">
+                
+                <button class="submit-button" id="simg1_submitButton">
+                    Apply Scan Effect
+                </button>
+            </div>
+
+            <div class="preview-area-wrapper" id="simg1_uploadedPreviewWrapper" style="display: none;">
+                <h3 class="preview-title">Uploaded Images</h3>
+                <div class="image-preview-grid" id="simg1_uploadedImagesGrid">
+                    </div>
+            </div>
+
+            <div class="preview-area-wrapper">
+                <h3 class="preview-title">Processed Scanned Images</h3>
+                <div class="processed-area" id="simg1_processedArea">
+                    <p id="simg1_processedMessage">Scanned images will appear here.</p>
+
+                    </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="{% static 'script/image_to_scanned.js' %}" ></script>
+    {% endblock %}

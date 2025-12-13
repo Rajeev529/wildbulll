@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="tool-header">
+        <h1 class="text3" >Add Watermark to Images – Protect Your Photos Online </h1>
+    </div>
+    <main class="content-container">
+        <section class="reducer-container">
+
+            <input type="file" id="wmark1_targetFileInput" accept="image/*" multiple required style="display: none;">
+
+            <div class="drag-drop-area" id="wmark1_dragDropArea">
+                <p>Drag and drop images to watermark here, or click to browse</p>
+            </div>
+            {% csrf_token %}
+            <form action="/add-watermark-process/" method="POST" enctype="multipart/form-data" id="wmark1_form">
+                
+                <h3 class="preview-title" style="margin-top: 30px;">Watermark Setup</h3>
+                <div class="watermark-config-tabs">
+                    <button type="button" class="watermark-tab-button active" data-tab="text">Text Watermark</button>
+                    <button type="button" class="watermark-tab-button" data-tab="image">Image Watermark</button>
+                </div>
+
+                <div id="wmark1_textTab" class="watermark-tab-content">
+                    <label for="wmark1_textInput" style="color: white; display: block; margin-bottom: 5px;">Enter Watermark Text:</label>
+                    <input type="text" id="wmark1_textInput" name="watermark_text" placeholder="e.g., @GorillaTools" value="Gorilla Tool">
+                    
+                    <input type="hidden" id="wmark1_mode" name="watermark_mode" value="text"> 
+                </div>
+
+                <div id="wmark1_imageTab" class="watermark-tab-content" style="display: none;">
+                    <input type="file" id="wmark1_watermarkFileInput" name="watermark_image" accept="image/png" style="display: none;">
+                    <div class="watermark-image-area" id="wmark1_watermarkImageArea">
+                        <p id="wmark1_watermarkImageLabel">Click to upload Watermark Image (PNG recommended)</p>
+                    </div>
+                </div>
+                
+                <div class="config-area" style="justify-content: center;">
+                    <button type="submit" class="submit-button" id="wmark1_submitButton" disabled>
+                        Apply Watermark
+                    </button>
+                </div>
+            </form>
+
+            <div class="preview-area-wrapper" id="wmark1_uploadedPreviewWrapper" style="display: none;">
+                <h3 class="preview-title">Images to be Watermarked</h3>
+                <div class="image-preview-grid" id="wmark1_uploadedImagesGrid">
+                    </div>
+            </div>
+
+            <div class="preview-area-wrapper">
+                <h3 class="preview-title">Watermarked Images</h3>
+                <div class="processed-area" id="wmark1_processedArea">
+                    <p id="wmark1_processedMessage">Watermarked images will appear here after processing.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="{% static 'script/image_to_wattermark.js' %}" ></script>
+    {% endblock %}

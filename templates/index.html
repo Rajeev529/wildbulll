@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="main-title">Free Document And Image Processing Tool</h1>
+            <h1 class="main-title" id="text1" style="color: coral;">| A Indian Tool</h1>
+        </div>
+        <div class="gorilla-container">
+            <!-- gorilla chacha -->
+            <img src="https://png.pngtree.com/png-vector/20231215/ourmid/pngtree-clipart-angry-bull-cartoon-white-background-png-image_11321823.png" alt="A fierce gorilla mascot" class="gorilla-image">
+        </div>
+    </section>
+
+    <main class="content-container">
+        <section class="processing-section">
+            <h2 class="section-title">Image Processing</h2>
+            <div class="boxes-grid">
+                <a href="/resize-image">
+                    <div class="tool-box">
+                        <img src="{% static 'images/mb2kb.png' %}" alt="Image to PDF icon">
+                        <p>MB to KB</p>
+                    </div>
+
+                </a>
+                <a href="/image-to-pdf/">
+                    <div class="tool-box">
+                        <img src="{% static 'images/img2pdf.png' %}" alt="Image to PDF icon">
+                        <p>image To pdf</p>
+                    </div>
+                </a>
+                <a href="/image-to-scanned-image">
+                    <div class="tool-box">
+                        <img src="{% static 'images/scan.png' %}" alt="Image to PDF icon">
+                        <p>scan image</p>
+                    </div>
+                </a>
+                <a href="/any-to-jpg-png-converter">
+                    <div class="tool-box">
+                        <img src="{% static 'images/extension.png' %}" alt="Image to PDF icon">
+                        <p>Convert Into JPG, PNG</p>
+                    </div>
+                </a>
+                <a href="/add-wattermark-image">
+                    <div class="tool-box">
+                        <img src="{% static 'images/watermark.png' %}" alt="Image to PDF icon">
+                        <p>Add Watermark Image</p>
+                    </div>
+
+                </a>
+
+                </div>
+        </section>
+
+        <!-- <section class="processing-section">
+            <h2 class="section-title">PDF Processing</h2>
+            <div class="boxes-grid">
+                <a href="">
+                    <div class="tool-box">
+                        <img src="https://i.imgur.com/jM8c3e8.png" alt="PDF to Image icon">
+                        <p>pdf To image</p>
+                    </div>
+
+                </a>
+            </div>
+        </section> -->
+
+    </main>
+
+{% endblock %}

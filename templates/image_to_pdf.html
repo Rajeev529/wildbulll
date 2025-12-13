@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="tool-header">
+        <h1 class="text3" >Images to PDF Converter – Convert Images to PDF Online </h1>
+    </div>
+    <main class="content-container">
+        <section class="reducer-container">
+
+            <input type="file" id="itp1_fileInput" accept="image/*" multiple style="display: none;">
+
+            <div class="drag-drop-area" id="itp1_dragDropArea">
+                <p>Drag and drop images here, or click to browse</p>
+            </div>
+
+            <div class="config-area">
+                
+                <button class="submit-button" id="itp1_submitButton">
+                    Convert to PDF
+                </button>
+            </div>
+
+            <div class="preview-area-wrapper" id="itp1_uploadedPreviewWrapper" style="display: none;">
+                <h3 class="preview-title">Uploaded Images</h3>
+                <div class="image-preview-grid" id="itp1_uploadedImagesGrid">
+                    </div>
+            </div>
+
+            <div class="preview-area-wrapper">
+                <h3 class="preview-title">Processed PDF</h3>
+                <div class="processed-area" id="itp1_processedArea">
+                    <p id="itp1_processedMessage">No PDF has been processed yet.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="{% static 'script/image_to_pdf.js' %}" ></script>
+{% endblock %}

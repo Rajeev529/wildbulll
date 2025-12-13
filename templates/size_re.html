@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="tool-header">
+        <h1 class="text3" >Image Size Reducer Tool – Convert Images Into Target KB Easily</h1>
+    </div>
+    <main class="content-container">
+        <section class="reducer-container">
+
+            <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+
+            <div class="drag-drop-area" id="dragDropArea">
+                <p>Drag and drop images here, or click to browse</p>
+            </div>
+
+            <div class="config-area">
+                <div class="kb-input-group">
+                    <label for="targetKb">Reduce image(s) to:</label>
+                    <input type="number" id="targetKb" placeholder="50" value="50" min="10" required>
+                    <label>KB</label>
+                </div>
+                <button class="submit-button" id="submitButton" disabled>
+                    Reduce Size
+                </button>
+            </div>
+
+            <div class="preview-area-wrapper" id="uploadedPreviewWrapper" style="display: none;">
+                <h3 class="preview-title">Uploaded Images</h3>
+                <div class="image-preview-grid" id="uploadedImagesGrid">
+                    </div>
+            </div>
+
+            <div class="preview-area-wrapper">
+                <h3 class="preview-title">Processed Images</h3>
+                <div class="processed-area" id="processedArea">
+                    <p id="processedMessage">No images have been processed yet.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+
+    <script src="{% static 'script/mb_to_kb_image.js' %}" ></script>
+    {% endblock %}
