@@ -20,3 +20,6 @@ def tojpg(request):
 @ensure_csrf_cookie
 def image_to_wattermark(request):
     return render(request, 'image_to_wattermark.html')
+
+def about(request):
+    return render(request, 'about.html')

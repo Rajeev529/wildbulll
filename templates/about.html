@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        
+        <section class="about-hero">
+            <div class="content-container">
+                <h1>We Build Simplicity.</h1>
+                <p>The Doc Hunger was created out of a simple necessity: to make complex digital tasks—like image resizing, watermarking, and format conversion—**instantly simple, private, and free.**</p>
+            </div>
+        </section>
+
+        <section class="value-prop-section content-container">
+            <h2 class="preview-title" style="font-size: 2em; text-align: center; color: white;">Why We Are Different</h2>
+            
+            <div class="value-grid">
+                
+                <div class="value-card">
+                    <h3><span>⚡</span> Blazing Fast Performance</h3>
+                    <p>Our tools are engineered for speed. All processing happens directly in your browser, not our servers. This means instant results and zero waiting time.</p>
+                </div>
+
+                <div class="value-card">
+                    <h3><span>🔒</span> Ultimate Privacy</h3>
+                    <p>Since nothing is uploaded, we never see or store your files. Your data security is guaranteed. No logs, no tracking, just pure, private processing.</p>
+                </div>
+
+                <div class="value-card">
+                    <h3><span>✨</span> Addictively Simple Design</h3>
+                    <p>Forget confusing menus. We focus on one task per page with an intuitive drag-and-drop interface, making complex jobs feel effortless and fun.</p>
+                </div>
+                
+                <div class="value-card">
+                    <h3><span>💰</span> Completely Free</h3>
+                    <p>We believe in open access. Our tools are maintained by a small, dedicated team and supported by non-intrusive ads, ensuring our services remain free forever.</p>
+                </div>
+                
+            </div>
+        </section>
+        
+        <section class="image-trust-section content-container">
+            <h2 class="preview-title" style="font-size: 2em; color: #ff9933; margin-bottom: 20px;">Meet the Engine Behind the Power</h2>
+            <p style="color: #ccc; max-width: 700px; margin: 0 auto 30px;">We are a lean, passionate team committed to solving the daily frustrations of digital file management. We use cutting-edge front-end technology to put processing power back into your hands.</p>
+            
+            <div class="image-wrapper">
+                <img src="{% static 'images/about.jpg' %}" alt="Stylized image representing the fast core technology of Gorilla Tool">
+            </div>
+        </section>
+
+        <section class="cta-section content-container">
+            <h2>Ready to Simplify Your Digital Life?</h2>
+            <p style="font-size: 1.1em;">Stop wasting time on slow, complicated tools. Start processing smarter, instantly.</p>
+            <a href="size_reducer.html" class="cta-button">
+                Start Using the Best Tool
+            </a>
+        </section>
+
+    </main>
+
+{% endblock %}

@@ -7,24 +7,68 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gorilla Tool</title>
+    <title>Document Hungry</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">  
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     
     <header class="top-bar">
-        <div class="logo">
-            <!-- logo chacha -->
-            <img src="https://png.pngtree.com/png-vector/20231215/ourmid/pngtree-clipart-angry-bull-cartoon-white-background-png-image_11321823.png" alt="Tool Icon" class="tool-icon">
-            <h2 id="text2" > Wild Bull</h2>
-        </div>
-        <nav class="navbar">
-            <a href="/">Home</a>
-            <a href="#image">About Us</a>
-            <a href="#pdf">Contact</a>
-            <a href="#docx">Feedback</a>
-        </nav>
+        <a class="text4" href="/">
+            <div class="logo">
+                <img src="https://png.pngtree.com/png-vector/20231215/ourmid/pngtree-clipart-angry-bull-cartoon-white-background-png-image_11321823.png" alt="Tool Icon" class="tool-icon">
+                <h3>Doc Hungry</h3>
+            </div>
+        </a>
+        <ul class="navbar">
+            <li class="nav-item"><a href="/">Home</a></li>
+            
+            <li class="nav-item">
+                <input type="checkbox" id="image-menu-toggle" class="menu-toggle">
+                <label for="image-menu-toggle">
+                    <a href="#" onclick="document.getElementById('image-menu-toggle').checked = !document.getElementById('image-menu-toggle').checked;">
+                        Tools
+                    </a>
+                </label>
+                
+                <div class="dropdown-menu">
+                    <div class="dropdown-content">
+                        
+                        <div class="menu-column">
+                            <div class="column-title">⚙️ Core Processing</div>
+                            <div class="column-links">
+                                <a href="/resize-image">Image Size Reducer</a>
+                                <a href="/any-to-jpg-png-converter">Image Extension Converter</a>
+                                <a href="/add-wattermark-image">Add Image Watermark</a>
+                                <a href="/image-to-scanned-image">Image to Scanned Look</a>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-column">
+                            <div class="column-title">🔄 Conversions</div>
+                            <div class="column-links">
+                                <a href="/image-to-pdf">Images to PDF</a>
+                                <a href="#pdf-to-image">PDF to Images(soon)</a>
+                                <a href="#image-to-word">Image to DOCX (Soon)</a>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-column">
+                            <div class="column-title">✨ Editing & Prep</div>
+                            <div class="column-links">
+                                <a href="#crop">Crop & Resize(soon)</a>
+                                <a href="#filter">Add Filters/Effects(soon)</a>
+                                <a href="#editor">Advanced Editor(soon)</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            
+            <li class="nav-item"><a href="/about">About Us</a></li>
+            <li class="nav-item"><a href="#docx">Docx</a></li>
+        </ul>
     </header>
 
     <div class="ad-sense">

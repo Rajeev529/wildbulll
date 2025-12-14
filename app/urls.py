@@ -14,6 +14,7 @@ urlpatterns = [
     path("convert_image_extension/",image_process.convert_image_extension),
     path("add-wattermark-image",views.image_to_wattermark),
     path("add-watermark-process/",image_process.watermark_images),
+    path("about",views.about),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
