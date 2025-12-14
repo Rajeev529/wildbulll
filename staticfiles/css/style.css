@@ -1,0 +1,866 @@
+/* Basic Reset and Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif; /* Using a modern, clean font */
+    background-color: #0b1c31; /* Dark blue background from the image */
+    color: white;
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 1. Top Bar & Navbar Styling */
+.top-bar {
+    background-color: #ff9933; /* Orange/Gold color */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    height: 60px;
+}
+
+.tool-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.navbar {
+    display: flex;
+    gap: 20px; /* Space between links */
+}
+
+.navbar a {
+    color: #0b1c31; /* Dark text for contrast */
+    text-decoration: none;
+    font-weight: 700;
+    padding: 5px 10px;
+    white-space: nowrap; /* Prevents links from breaking */
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    position: relative;
+    background-color: white;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    
+}
+
+/* 2. Ad Sense Area */
+.ad-sense {
+    background-color: #1e3146; /* Slightly lighter dark blue */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    color: #a8b8cc;
+}
+
+/* 3. Hero Section (Title + Gorilla Image) */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 50%; /* Give title space */
+}
+
+.main-title {
+    font-size: 2.5em; /* Large text */
+    line-height: 1.2;
+    font-weight: 700;
+    color: white;
+}
+
+.gorilla-container {
+    flex: 1;
+    text-align: right;
+    max-width: 50%;
+}
+
+.gorilla-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 4 & 5. Processing Sections and Boxes Grid */
+.processing-section {
+    padding: 20px 0;
+}
+
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    padding-left: 15px; /* Alignment with container */
+}
+
+.boxes-grid {
+    display: grid;
+    /* Use repeat and auto-fit to make the grid automatically wrap and adjust */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px; /* Space between boxes */
+    padding: 0 15px;
+}
+
+.tool-box {
+    background-color: #ff9933; /* Orange/Gold color for boxes */
+    color: #0b1c31;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Flexbox for vertical alignment inside the box */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px; /* Ensure a minimum size */
+}
+
+.tool-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.tool-box img {
+    width: 80px; /* Size for the inner icons/images */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.tool-box p {
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+/* 6. Bottom Footer Styling */
+.footer {
+    background-color: #ff9933; /* Orange/Gold color */
+    color: #0b1c31;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* --- Mobile Responsiveness (Media Queries) --- */
+
+/* Adjustments for smaller screens (e.g., typical mobile devices) */
+@media (max-width: 768px) {
+    
+    /* 1. Navbar - Stack vertically if too little space */
+    .navbar {
+        /* Allow navigation items to wrap if necessary */
+        /* flex-wrap: wrap;  */
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .top-bar {
+        height: auto; /* Allow the bar to grow if the navbar wraps */
+        /* flex-direction: column; */
+        align-items: flex-start;
+        padding-bottom: 5px;
+    }
+
+    .navbar {
+        width: 100%;
+        /* justify-content: space-around; */
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: small;
+    }
+    .navbar a {
+        color: #0b1c31;
+        text-decoration: none;
+        font-weight: 700;
+        padding: 14px 5px;
+        white-space: nowrap;
+        transition: color 0.3s;
+        margin: 0px;
+    }
+
+    /* 3. Hero Section - Stack title and gorilla image vertically */
+    .hero-section {
+        /* flex-direction: column; */
+        text-align: center;
+        padding: 20px 15px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        margin-bottom: 20px;
+        text-align: left; /* Keep text left-aligned for readability */
+    }
+
+    .main-title {
+        font-size: .8em;
+    }
+
+    .gorilla-container {
+        max-width: 80%; /* Make the gorilla image smaller on mobile */
+        text-align: center;
+        margin: 0 auto;
+    }
+    #text2 {
+        margin-right: 6px;
+        font-size: larger;
+    }
+    .logo {
+        display: flex;
+        width: 60%;
+        padding-top: 7px;
+    }
+    /* 4 & 5. Boxes Grid - Already responsive, but adjust min size */
+    .boxes-grid {
+        /* Allows for 2 columns on small screens, ensuring min 140px width */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+}
+
+/* Further adjustment for very small screens (less than 480px) */
+@media (max-width: 480px) {
+    .boxes-grid {
+        /* Ensures boxes don't get too small, may fall to 1 column */
+        /* grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); */
+        gap: 10px;
+    }
+    
+    .tool-box {
+        min-height: 120px;
+    }
+
+    .tool-box img {
+        width: 60px;
+    }
+
+    .main-title {
+        font-size: 1.5em;
+    }
+}
+/* --- New styles for Image Size Reducer page (Append to style.css) --- */
+
+.reducer-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1e3146; /* Slightly lighter dark blue background for the section */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Drag and Drop Input Area */
+.drag-drop-area {
+    border: 3px dashed #ff9933; /* Orange dashed border */
+    border-radius: 10px;
+    padding: 50px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.drag-drop-area:hover,
+.drag-drop-area.dragover {
+    background-color: #2b3d54; /* Lighter background on hover/drag */
+    border-color: #ffb766;
+}
+
+.drag-drop-area p {
+    font-size: 1.2em;
+    color: #ff9933;
+    font-weight: 700;
+}
+
+/* Configuration and Action Area */
+.config-area {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 10px 0;
+}
+
+.kb-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.kb-input-group label {
+    font-size: 1em;
+    color: white;
+    white-space: nowrap;
+}
+
+#targetKb {
+    padding: 10px;
+    border: 1px solid #4a5a73;
+    border-radius: 6px;
+    background-color: #0b1c31;
+    color: white;
+    width: 100px; /* Fixed width for the input box */
+    text-align: right;
+}
+
+.submit-button {
+    background-color: #ff9933;
+    color: #0b1c31;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #ffb766;
+}
+
+.submit-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Image Preview Area */
+.preview-area-wrapper {
+    margin-bottom: 30px;
+}
+
+.preview-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    padding-left: 5px;
+    border-left: 4px solid #ff9933;
+    color: white;
+}
+
+.image-preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.image-card {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #4a5a73;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-card p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.7em;
+    padding: 3px;
+    text-align: center;
+}
+
+/* Processed Area & Loading */
+.processed-area {
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loading Spinner (CSS-only) */
+.loading-spinner {
+    display: none; /* Hidden by default */
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #ff9933;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Download Card Styling (Similar to Image Card) */
+.download-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ff9933;
+    border-radius: 8px;
+    background-color: #0b1c31;
+    text-align: center;
+}
+
+.download-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.download-card a {
+    background-color: #4CAF50; /* Green Download Button */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 5px;
+    font-size: 0.8em;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .reducer-container {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+
+    .config-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .kb-input-group {
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    #targetKb {
+        width: 150px;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+}
+/* --- New styles for Watermark Tool (Append to style.css) --- */
+
+.watermark-config-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.watermark-tab-button {
+    background-color: #4a5a73; /* Darker blue */
+    color: white;
+    padding: 10px 20px;
+    border: 1px solid #0b1c31;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 700;
+}
+
+.watermark-tab-button:first-child {
+    border-radius: 6px 0 0 6px;
+}
+.watermark-tab-button:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.watermark-tab-button.active,
+.watermark-tab-button:hover {
+    background-color: #ff9933; /* Orange highlight */
+    color: #0b1c31;
+}
+
+.watermark-tab-content {
+    padding: 15px;
+    border: 1px solid #4a5a73;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background-color: #122438; /* Slightly lighter background for the content box */
+}
+
+/* Watermark Text Input Styling */
+#wmark1_textInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4a5a73;
+    border-radius: 4px;
+    background-color: #0b1c31;
+    color: white;
+    box-sizing: border-box;
+}
+
+/* Watermark Image Input Styling */
+.watermark-image-area {
+    border: 2px dashed #4a5a73;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+}
+.watermark-image-area:hover {
+    border-color: #ff9933;
+}
+.watermark-image-area p {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+/* Download All Button Styling (Prominent Green) */
+.download-all-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.download-all-button:hover {
+    background-color: #45a049;
+}
+.logo {
+    display: flex;
+    width: 60%;
+    padding-top: 0px;
+    align-items: center;
+}
+#text2{
+    margin-right: 6px;
+}
+.text3{
+    text-align: left;
+    width: 46%;
+    /* background-color: wheat; */
+    margin: 0px 0px 0px 37px;
+}
+.tool-header{
+    background-color: #1e3146; /* Slightly lighter dark blue */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 14px;
+    color: #ff9933;
+}
+
+
+@media (max-width: 768px){
+    .text3 {
+        text-align: left;
+        width: 88%;
+        font-size: medium;
+        /* background-color: wheat; */
+        margin: 0px 0px 0px 37px;
+    }
+
+}
+
+
+
+
+
+
+.navbar {
+    display: flex; /* Ensures the main navbar items are side-by-side */
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0;
+}
+
+/* Override the simple 'a' tag selector if it exists */
+.navbar a {
+    /* Resetting base anchor style for the list structure */
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+}
+
+.nav-item {
+    position: relative; /* Crucial for positioning the dropdown */
+    margin-right: 10px;
+}
+
+/* Styling the main link wrappers */
+.nav-item > label > a, .nav-item > a {
+    color: #0b1c31;
+    text-decoration: none;
+    padding: 10px 0px;
+    display: block; 
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.nav-item > label > a:hover, .nav-item > a:hover {
+    background-color: #213a5c;
+    color: white;
+}
+
+/* 3. The Dropdown Container (Mega Menu) */
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; 
+    right: 0; /* Anchor the right edge to prevent overflow */
+    
+    min-width: 450px; 
+    background-color: #1a3150;
+    border: 1px solid #4a5a73;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* 4. Dropdown Content Layout */
+.dropdown-content {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px;
+    width: 100%;
+}
+
+.menu-column {
+    flex: 1 1 140px; /* Responsive column sizing */
+}
+
+.column-title {
+    color: #ff9933;
+    font-size: 0.9em;
+    font-weight: 700;
+    margin-bottom: 5px;
+    padding: 5px 0;
+    border-bottom: 1px dashed #4a5a73;
+}
+
+.column-links a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    padding: 5px 0;
+    font-size: 0.9em;
+    transition: color 0.2s;
+}
+.column-links a:hover {
+    color: #ff9933;
+    text-decoration: underline;
+}
+
+/* 5. Desktop: Show on Hover */
+.nav-item:hover .dropdown-menu {
+    display: flex;
+}
+
+/* 6. Mobile/Touch: Toggle visibility using a pseudo-checkbox */
+.menu-toggle {
+    display: none;
+}
+.menu-toggle:checked ~ .dropdown-menu {
+    display: flex;
+}
+
+/* 7. Small Screen Adjustment */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: static; 
+        width: 100%; 
+        margin-top: 10px;
+        min-width: unset; 
+        left: unset; /* Ensure left/right is reset */
+        right: unset;
+    }
+    .dropdown-content {
+        flex-direction: column;
+    }
+    .menu-column {
+            flex-basis: auto;
+    }
+    .menu-column:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
+
+.text4{
+    color: #ffffff;
+    text-decoration: none;
+    display: contents;
+}
+
+
+
+
+/* about page */
+
+
+.about-hero {
+    background-color: #1a3150;
+    padding: 100px 0;
+    text-align: center;
+    margin-bottom: 50px;
+    border-bottom: 4px solid #ff9933;
+    animation: fadeIn 1s ease-out;
+}
+
+.about-hero h1 {
+    font-size: 3.5em;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.about-hero p {
+    font-size: 1.2em;
+    color: #ccc;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* --- Trust and Value Section (Modular Grid) --- */
+.value-prop-section {
+    padding: 30px 0;
+    margin-bottom: 50px;
+}
+
+.value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.value-card {
+    background-color: #122438;
+    padding: 30px;
+    border-radius: 12px;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border-left: 5px solid #4a5a73;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+    background-color: #1a3150;
+    border-left-color: #ff9933; /* Highlight on hover */
+}
+
+.value-card h3 {
+    color: #ff9933;
+    font-size: 1.5em;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+}
+.value-card h3 span {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* --- Image Section: Trust & Team --- */
+.image-trust-section {
+    background-color: #122438;
+    padding: 50px 0;
+    margin-bottom: 50px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.image-wrapper {
+    max-width: 900px;
+    margin: 30px auto;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Use a placeholder image that fits the "Gorilla" theme for impact */
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s;
+}
+.image-wrapper img:hover {
+    transform: scale(1.05); /* Subtle zoom effect */
+}
+
+/* --- Call to Action --- */
+.cta-section {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #ff9933;
+    color: #0b1c31;
+    border-radius: 12px;
+    margin-bottom: 50px;
+}
+
+.cta-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.cta-button {
+    background-color: #0b1c31;
+    color: white;
+    text-decoration: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1em;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.cta-button:hover {
+    background-color: #213a5c;
+    transform: scale(1.05);
+}
+
+/* Responsive Adjustments */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 60px 20px;
+    }
+    .about-hero h1 {
+        font-size: 2.5em;
+    }
+    .value-grid {
+        grid-template-columns: 1fr;
+    }
+}
