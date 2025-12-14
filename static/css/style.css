@@ -201,7 +201,7 @@ body {
     }
 
     .main-title {
-        font-size: 1.8em;
+        font-size: .8em;
     }
 
     .gorilla-container {
@@ -554,4 +554,16 @@ body {
     padding: 15px 0;
     font-size: 14px;
     color: #ff9933;
+}
+
+
+@media (max-width: 768px){
+    .text3 {
+        text-align: left;
+        width: 88%;
+        font-size: medium;
+        /* background-color: wheat; */
+        margin: 0px 0px 0px 37px;
+    }
+
 }
