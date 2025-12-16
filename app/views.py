@@ -23,3 +23,7 @@ def image_to_wattermark(request):
 
 def about(request):
     return render(request, 'about.html')
+def csv2pdf(request):
+    return render(request, 'csv2pdf.html')
+def intocsvexcel(request):
+    return render(request, 'into_csv_excel.html')

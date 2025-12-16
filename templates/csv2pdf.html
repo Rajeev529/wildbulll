@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="tool-header">
+        <h1 class="text3" >Excel/Csv To Pdf Converter</h1>
+    </div>
+    <main class="content-container">
+        <section class="reducer-container">
+
+            <h2 class="preview-title" style="margin-bottom: 20px;">Excel/CSV to Multi-Format PDF</h2>
+
+            <input type="file" id="excelFileInput" accept=".csv, .xlsx" multiple required style="display: none;">
+
+            <div class="drag-drop-area" id="dragDropArea">
+                <p>Drag and drop Excel/CSV files here, or click to browse (1 file = 1 PDF)</p>
+                <div id="fileCount" style="margin-top: 10px; font-weight: 700; color: #ccc;">0 files selected.</div>
+            </div>
+
+            <h3 class="preview-title">Choose PDF Layout (3 Output Types)</h3>
+            <div class="layout-options" id="layoutOptions">
+                
+                <div class="layout-card selected" data-type="tabular">
+                    <h4>Type 1: Tabular Grid</h4>
+                    <pre>| Name | Age | City |
+|------|-----|------|
+| Alice| 25  | London|</pre>
+                    <p style="color: #ccc;">*Standard spreadsheet look.*</p>
+                </div>
+
+                <div class="layout-card" data-type="card">
+                    <h4>Type 2: Record/Card View</h4>
+                    <pre># Name: Alice
+# Age: 25
+# City: London
+---
+# Name: Bob
+# ...</pre>
+                    <p style="color: #ccc;">*Each row is a record.*</p>
+                </div>
+
+                <div class="layout-card" data-type="columnar">
+                    <h4>Type 3: Columnar Breakdown</h4>
+                    <pre># Column 1: Name
+# Alice
+# Bob
+---
+# Column 2: Age
+# 25
+# 30</pre>
+                    <p style="color: #ccc;">*Data grouped by column.*</p>
+                </div>
+
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="button" class="submit-button" id="submitButton" disabled>
+                    Convert to PDF
+                </button>
+            </div>
+
+            <div class="preview-area-wrapper" style="margin-top: 50px;">
+                <h3 class="preview-title">Download Results</h3>
+                <div class="processed-area" id="processedArea">
+                    <p id="processedMessage" style="color: #ccc;">Converted PDF files will appear here.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="{% static 'script/csv2pdf.js' %}" ></script>
+    {% endblock %}

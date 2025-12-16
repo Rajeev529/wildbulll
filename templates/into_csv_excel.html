@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="tool-header">
+        <h1 class="text3" >Conversion Between Excel and Csv File</h1>
+    </div>
+    <main class="content-container">
+        <section class="converter-container">
+
+            <h2 class="preview-title" style="margin-bottom: 20px;">Cross-Format Data Converter (CSV ↔ Excel)</h2>
+
+            <input type="file" id="dataFileInput" 
+                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                   multiple required style="display: none;">
+
+            <div class="drag-drop-area" id="dragDropArea">
+                <p>Drag and drop CSV or Excel files here, or click to browse</p>
+                <div id="fileInfo" style="margin-top: 10px; font-weight: 700; color: #ccc;">No files selected.</div>
+            </div>
+
+            <form id="conversionForm">
+                
+                <div class="format-selector">
+                    <label for="outputFormat">Convert Files To:</label>
+                    <select id="outputFormat" name="outputFormat">
+                        <option value="csv">CSV</option>
+                        <option value="xlsx">Excel (XLSX)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button" id="submitButton" disabled>
+                    Start Conversion
+                </button>
+            </form>
+
+            <div class="preview-area-wrapper" style="margin-top: 50px;">
+                <h3 class="preview-title">Converted Files</h3>
+                <div class="processed-area" id="processedArea">
+                    <p id="processedMessage" style="color: #ccc;">Converted files will appear here after processing.</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="{% static 'script/into_csv_excel.js' %}" ></script>
+    {% endblock %}

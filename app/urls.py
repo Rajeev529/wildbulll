@@ -1,5 +1,5 @@
 from django.urls import path,include
-from . import views, image_process
+from . import views, image_process, csv
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -15,6 +15,11 @@ urlpatterns = [
     path("add-wattermark-image",views.image_to_wattermark),
     path("add-watermark-process/",image_process.watermark_images),
     path("about",views.about),
+    path("excel-to-pdf-converter",views.csv2pdf),
+    path("excel-to-pdf/", csv.excel_to_pdf_ajax, name="excel_to_pdf"),
+    path("excel-csv-converter",views.intocsvexcel),
+    path("convert-data/", csv.convert_data, name="excel_to_pdf"),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

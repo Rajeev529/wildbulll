@@ -175,7 +175,7 @@ body {
 
     .top-bar {
         height: auto; /* Allow the bar to grow if the navbar wraps */
-        /* flex-direction: column; */
+        flex-direction: column;
         align-items: flex-start;
         padding-bottom: 5px;
     }
@@ -185,7 +185,7 @@ body {
         /* justify-content: space-around; */
         padding-top: 5px;
         padding-bottom: 5px;
-        font-size: small;
+        font-size: 8px;
     }
     .navbar a {
         color: #0b1c31;
@@ -556,7 +556,8 @@ body {
 }
 .logo {
     display: flex;
-    width: 60%;
+    margin: auto;
+    width: auto;
     padding-top: 0px;
     align-items: center;
 }
@@ -595,10 +596,11 @@ body {
 
 
 .navbar {
-    display: flex; /* Ensures the main navbar items are side-by-side */
-    list-style: none; /* Remove bullet points */
+    display: flex;
+    list-style: none;
     padding: 0;
-    margin: 0;
+    margin: auto;
+    width: auto;
 }
 
 /* Override the simple 'a' tag selector if it exists */
@@ -640,7 +642,7 @@ body {
     border: 1px solid #4a5a73;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    padding: 10px;
+    padding: 4px;
     border-radius: 6px;
 }
 
@@ -864,3 +866,177 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+.layout-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.layout-card {
+    background-color: #1a3150;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #4a5a73;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+    text-align: center;
+}
+
+.layout-card.selected {
+    border-color: #ff9933;
+    box-shadow: 0 0 15px rgba(255, 153, 51, 0.5);
+    background-color: #213a5c;
+}
+
+.layout-card h4 {
+    color: white;
+    margin-top: 5px;
+    font-size: 1.1em;
+}
+
+.layout-card pre {
+    background-color: #0b1c31;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    text-align: left;
+    overflow-x: auto;
+    color: #4CAF50; /* Green text for code/preview */
+    white-space: pre-wrap; /* Wrap long lines */
+}
+
+/* --- Download Cards for PDF Preview --- */
+.download-card {
+    background-color: #213a5c;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 150px;
+}
+.download-card p { margin: 5px 0; font-size: 0.9em; }
+.download-card a {
+    display: block;
+    margin-top: 10px;
+    background-color: #4a5a73;
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+.download-card a:hover {
+    background-color: #ff9933;
+    color: #0b1c31;
+}
+.processed-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 100px;
+}
+
+
+/* --- UPDATED STYLES FOR DROPDOWN MENU IMPLEMENTATION --- */
+
+/* --- Tool Interface Styles (No change needed here, focus on consistency) --- */
+
+.converter-container {
+    background-color: #122438; 
+    border-radius: 12px; 
+    padding: 30px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+.drag-drop-area { 
+    border: 3px dashed #4a5a73; 
+    background-color: #1a3150; 
+    padding: 50px 20px; 
+    text-align: center; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    transition: all 0.3s; 
+    margin-bottom: 30px; 
+    color: white; 
+}
+.drag-drop-area.dragover {
+     border-color: #ff9933; 
+     background-color: #213a5c; 
+}
+
+.preview-title {
+    border-bottom: 2px solid #4a5a73;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #ff9933;
+    font-size: 1.5em;
+}
+
+/* --- Dropdown Selector Styles (NEW/UPDATED SECTION) --- */
+.format-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+}
+
+.format-selector label {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+#outputFormat {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #4a5a73;
+    background-color: #1a3150;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    /* Style the dropdown arrow to match the theme */
+    -webkit-appearance: none; /* Hide default arrow in Chrome/Safari */
+    -moz-appearance: none;    /* Hide default arrow in Firefox */
+    appearance: none;         /* Hide default arrow */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff9933'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 18px;
+}
+
+#outputFormat option {
+    background-color: #122438; /* Set background for dropdown options */
+    color: white;
+}
+
+/* --- Submission and Download (Ensure these look right) --- */
+.submit-button { 
+    background-color: #ff9933; 
+    color: #0b1c31; 
+    border: none; 
+    padding: 12px 25px; 
+    border-radius: 8px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 40px auto;
+}
+.submit-button:disabled { 
+    background-color: #4a5a73; 
+    cursor: not-allowed; 
+}
+
+/* Rest of the download/processed styles (download-all-button, processed-area, download-card) remain unchanged. */
