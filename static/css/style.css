@@ -179,7 +179,14 @@ body {
         align-items: flex-start;
         padding-bottom: 5px;
     }
-
+    .logo h3{
+        padding-left: 6px;
+        font-size: 13;
+    }
+    .tool-icon{
+        width: 20px;
+        height: 20px;
+    }
     .navbar {
         width: 100%;
         /* justify-content: space-around; */
@@ -310,7 +317,10 @@ body {
     color: white;
     white-space: nowrap;
 }
-
+.logo h3{
+    padding-left: 6px;
+    
+}
 #targetKb {
     padding: 10px;
     border: 1px solid #4a5a73;
@@ -620,7 +630,8 @@ body {
 .nav-item > label > a, .nav-item > a {
     color: #0b1c31;
     text-decoration: none;
-    padding: 10px 0px;
+    /* padding: 3px 0px; */
+    padding-top: 6px;
     display: block; 
     border-radius: 4px;
     transition: background-color 0.3s;

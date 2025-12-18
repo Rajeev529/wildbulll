@@ -105,7 +105,7 @@ submitButton.addEventListener("click", () => {
             const card = document.createElement("div");
             card.className = "download-card";
             card.innerHTML = `
-                <img src="https://via.placeholder.com/100x100/A83232/FFFFFF?text=PDF">
+                <img src="/static/images/pdfred.png">
                 <span>${pdf.file_name}</span>
                 <a href="${pdf.base64}" download="${pdf.file_name}">Download PDF</a>
             `;

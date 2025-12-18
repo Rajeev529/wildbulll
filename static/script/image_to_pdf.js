@@ -136,7 +136,7 @@ itp1_submitButton.addEventListener("click", () => {
         card.classList.add("download-card", "pdf-card");
 
         card.innerHTML = `
-            <img src="https://png.pngtree.com/png-clipart/20220612/original/pngtree-pdf-file-icon-png-png-image_7965915.png" alt="PDF Icon">
+            <img src="/static/images/pdfred.png" alt="PDF Icon">
             <span>combined.pdf</span>
             <p>${itp1_filesList.length} Images</p>
             <a href="${pdfUrl}" download="combined.pdf">

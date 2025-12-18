@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib import colors
-
+import textwrap
 URL_REGEX = re.compile(r'(https?://\S+)')
 
 
@@ -121,42 +121,59 @@ def pdf_card(rows):
 
 # -------- TYPE 3: COLUMNAR -------- #
 def pdf_columnar(rows):
-    buf = io.BytesIO()
-    c = canvas.Canvas(buf, pagesize=A4)
+    buffer = io.BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
 
-    x = 40
-    y = height - 40
-    max_width = width - 80
+    x_margin = 40
+    y_margin = 40
+    y = height - y_margin
+    line_height = 14
+    max_width = width - (x_margin * 2)
+
+    if not rows:
+        c.drawString(x_margin, y, "No data found")
+        c.save()
+        buffer.seek(0)
+        return buffer.getvalue()
 
     headers = rows[0]
+    num_columns = len(headers)
 
-    for col_idx, header in enumerate(headers):
-        y = draw_wrapped_text(
-            c,
-            f"Column: {header}",
-            x, y,
-            max_width,
-            font="Helvetica-Bold",
-            size=13
-        )
-        y -= 10
+    for col_idx in range(num_columns):
+
+        # ---- HEADER ----
+        c.setFont("Helvetica-Bold", 13)
+        if y < y_margin:
+            c.showPage()
+            y = height - y_margin
+
+        c.drawString(x_margin, y, f"{headers[col_idx]}")
+        y -= line_height + 6
+
+        # ---- COLUMN VALUES ----
+        c.setFont("Helvetica", 10)
 
         for row in rows[1:]:
-            y = draw_wrapped_text(
-                c,
-                row[col_idx],
-                x, y,
-                max_width
-            )
-            y -= 4
+            value = row[col_idx] if col_idx < len(row) else ""
+            value = str(value)
 
-        y -= 20
+            wrapped_lines = textwrap.wrap(value, 90) or [""]
+
+            for line in wrapped_lines:
+                if y < y_margin:
+                    c.showPage()
+                    y = height - y_margin
+                    c.setFont("Helvetica", 10)
+
+                c.drawString(x_margin, y, line)
+                y -= line_height
+
+        y -= line_height  # spacing between columns
 
     c.save()
-    buf.seek(0)
-    return buf.read()
-
+    buffer.seek(0)
+    return buffer.getvalue()
 
 # ---------------- AJAX VIEW ---------------- #
 

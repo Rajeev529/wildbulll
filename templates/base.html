@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Hungry</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -16,7 +17,7 @@
     <header class="top-bar">
         <a class="text4" href="/">
             <div class="logo">
-                <img src="https://png.pngtree.com/png-vector/20231215/ourmid/pngtree-clipart-angry-bull-cartoon-white-background-png-image_11321823.png" alt="Tool Icon" class="tool-icon">
+                <img src="{% static 'images/logo.png' %}" alt="Tool Icon" class="tool-icon">
                 <h3>Doc Hungry</h3>
             </div>
         </a>
@@ -84,7 +85,7 @@
 
     {% endblock %}
     <footer class="footer">
-        @We Buil More
+        @under devleopment suggest on insta @13billy.hills
     </footer>
 </body>
 </html>

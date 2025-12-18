@@ -170,46 +170,50 @@ wmark1_form.addEventListener("submit", function (e) {
     fetch("/add-watermark-process/", {
         method: "POST",
         body: formData,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            "X-CSRFToken": getCSRFToken()
+        },
         credentials: "include",  // ensures CSRF + cookies are sent
     })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log("Response:", data);
+    .then((res) => res.json())
+    .then((data) => {
+        console.log("Response:", data);
 
-            if (data.error) {
-                wmark1_processedArea.innerHTML = `<p class="error">${data.error}</p>`;
-                return;
-            }
+        if (data.error) {
+            wmark1_processedArea.innerHTML = `<p class="error">${data.error}</p>`;
+            return;
+        }
 
-            let gridHTML = `
-                <button class="download-all-button" id="downloadZipBtn">Download All as ZIP</button>
-                <div class="image-preview-grid" id="processedGrid"></div>
+        let gridHTML = `
+            <button class="download-all-button" id="downloadZipBtn">Download All as ZIP</button>
+            <div class="image-preview-grid" id="processedGrid"></div>
+        `;
+        wmark1_processedArea.innerHTML = gridHTML;
+
+        const processedGrid = document.getElementById("processedGrid");
+
+        // SHOW PROCESSED IMAGES
+        data.images.forEach((img) => {
+            processedGrid.innerHTML += `
+                <div class="download-card">
+                    <img src="${img.base64}" alt="${img.file_name}">
+                    <span>${img.file_name}</span>
+                    <a href="${img.base64}" download="${img.file_name}">Download</a>
+                </div>
             `;
-            wmark1_processedArea.innerHTML = gridHTML;
-
-            const processedGrid = document.getElementById("processedGrid");
-
-            // SHOW PROCESSED IMAGES
-            data.images.forEach((img) => {
-                processedGrid.innerHTML += `
-                    <div class="download-card">
-                        <img src="${img.base64}" alt="${img.file_name}">
-                        <span>${img.file_name}</span>
-                        <a href="${img.base64}" download="${img.file_name}">Download</a>
-                    </div>
-                `;
-            });
-
-            // ZIP DOWNLOAD BUTTON
-            document.getElementById("downloadZipBtn").addEventListener("click", () => {
-                const link = document.createElement("a");
-                link.href = data.zip_base64;
-                link.download = data.zip_name;
-                link.click();
-            });
-        })
-        .catch((err) => {
-            console.error(err);
-            wmark1_processedArea.innerHTML = `<p class="error">Something went wrong.</p>`;
         });
+
+        // ZIP DOWNLOAD BUTTON
+        document.getElementById("downloadZipBtn").addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.href = data.zip_base64;
+            link.download = data.zip_name;
+            link.click();
+        });
+    })
+    .catch((err) => {
+        console.error(err);
+        wmark1_processedArea.innerHTML = `<p class="error">Something went wrong.</p>`;
+    });
 });
