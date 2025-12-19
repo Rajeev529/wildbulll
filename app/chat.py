@@ -1,6 +1,24 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-arr=[]
+arr = [
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HknmGF",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1Hg5JhD",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HrXWnV",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HeO8dS",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HezqCk",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HeuQur",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HhHIbH",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HhRExf",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HigdRF",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HnN3fO",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1Hc2rhk",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HfhPvr",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HjEvIO",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HjASxL",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HjEvIO",
+    "https://r.swiggy.com/decorate-xmas-tree/ydeHi7-hYhN1HknmGF",
+]
+
 # If you are using standard Django forms, remove @csrf_exempt 
 # and use the CSRF token in your JS.
 @csrf_exempt 
