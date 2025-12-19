@@ -15,11 +15,18 @@
 
     <main class="content-container">
         <section class="processing-section">
-            <h2 class="section-title">Image Processing</h2>
+            <h2 class="section-title">Image Processing Tools</h2>
             <div class="boxes-grid">
-                <a href="/resize-image">
+                <a href="/crop-&-rotate-image">
                     <div class="tool-box">
                         <img src="{% static 'images/mb2kb.png' %}" alt="Image to PDF icon">
+                        <p>Crop & Rotate</p>
+                    </div>
+
+                </a>
+                <a href="/resize-image">
+                    <div class="tool-box">
+                        <img src="{% static 'images/mb2kb1.png' %}" alt="Image to PDF icon">
                         <p>MB to KB</p>
                     </div>
 
@@ -53,7 +60,7 @@
                 </div>
         </section>
         <section class="processing-section">
-            <h2 class="section-title">Excel And CSV Processing</h2>
+            <h2 class="section-title">Excel And CSV Processing Tools</h2>
             <div class="boxes-grid">
                 
                 <a href="excel-to-pdf-converter">
@@ -70,8 +77,51 @@
                 </a>
                 </div>
         </section>
+        <section class="processing-section">
+            <h2 class="section-title">PDF Processing Tools</h2>
+            <div class="boxes-grid">
+                
+                <a href="#"> <!---/pdf-compressor --->
+                    <div class="tool-box">
+                        <img src="{% static 'images/output4.png' %}" alt="Image to PDF icon">
+                        <p>PDF Compressor</p>
+                    </div>
+                </a>
+                </div>
+        </section>
 
-        
+        <!-- chatbox start -->
+         <section class="chat-outer-wrapper">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="status-dot"></div>
+                    <span>Decor xmas tree & get 700/-in 5 min swiggy Chat</span>
+                </div>
+
+                <div class="chat-box" id="chatBox">
+                    {% for chat in chats %}
+                    <div class="message received">
+                        <div class="msg-content">
+                            <a href="{{chat}}">🎅 swiggy link {{forloop.counter}}</a>
+                        </div>
+                        <span class="msg-time">{{forloop.counter}}</span>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="userInput" placeholder="Add Your Swiggy Link" autocomplete="off">
+                    <button id="sendBtn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- chatbox end -->
 
 
 
@@ -89,5 +139,5 @@
         </section> -->
 
     </main>
-
+<script src="{% static 'script/chat.js' %}"></script>
 {% endblock %}

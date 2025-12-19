@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
-
+from . import chat
 
 # Create your views here.
 
 def homepage(request):
-    return render(request, 'index.html')
+    print(chat.arr)
+    return render(request, 'index.html',{"chats":chat.arr})
 
 @ensure_csrf_cookie
 def re_img(request):
@@ -27,3 +28,7 @@ def csv2pdf(request):
     return render(request, 'csv2pdf.html')
 def intocsvexcel(request):
     return render(request, 'into_csv_excel.html')
+def crop_rotate(request):
+    return render(request, 'edit_image.html')
+def pdf_shrink(request):
+    return render(request, 'pdf_shrink.html')

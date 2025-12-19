@@ -1,5 +1,5 @@
 from django.urls import path,include
-from . import views, image_process, csv
+from . import views, image_process, csv, pdf, chat
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
@@ -19,6 +19,10 @@ urlpatterns = [
     path("excel-to-pdf/", csv.excel_to_pdf_ajax, name="excel_to_pdf"),
     path("excel-csv-converter",views.intocsvexcel),
     path("convert-data/", csv.convert_data, name="excel_to_pdf"),
+    path("crop-&-rotate-image",views.crop_rotate),
+    path("pdf-compressor",views.pdf_shrink),
+    path("compress-pdf/", pdf.compress_pdfs),
+    path("chat-process/", chat.process_text_view),
 
 ]
 if settings.DEBUG:

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="tool-header">
+    <h1 class="text3" >Rotate & Crop Images </h1>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <div class="container">
+        <div class="tool-card">
+            <h1 class="title">Just Upload & Edit</h1>
+            <p class="subtitle">Fast, Private, & Professional Image Cropping.</p>
+
+            <div class="upload-box" id="dropZone">
+                <p style="font-size: 1.2em;">Drop image here or click to browse</p>
+                <input type="file" id="fileInput" accept="image/*" style="display:none">
+            </div>
+
+            <div class="editor-window" id="editorWindow">
+                <img id="imageToCrop">
+            </div>
+
+            <div class="controls" id="controlBar" style="display:none">
+                <button class="btn btn-outline" onclick="cropper.rotate(-90)">Rotate Left</button>
+                <button class="btn btn-outline" onclick="cropper.rotate(90)">Rotate Right</button>
+                <button class="btn btn-outline" onclick="cropper.setAspectRatio(1)">1:1</button>
+                <button class="btn btn-outline" onclick="cropper.setAspectRatio(16/9)">16:9</button>
+                <button class="btn btn-outline" onclick="cropper.setAspectRatio(NaN)">Free</button>
+                <button class="btn btn-success" id="finalizeBtn">Finalize Crop</button>
+            </div>
+
+            <div id="resultSection">
+                <h3 style="color: #ff9933;">Result</h3>
+                <img id="croppedImage">
+                <br>
+                <a id="downloadLink" class="btn" style="display:inline-block; margin-top:20px; text-decoration:none;">Download Cropped Image</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+    <script src="{% static 'script/edit_image.js' %}" ></script>
+    {% endblock %}
