@@ -1,148 +1,51 @@
-import os
 import io
-import zipfile
 import base64
-import subprocess
-import tempfile
-import shutil
-
 from django.http import JsonResponse
+from pypdf import PdfReader, PdfWriter
 from django.views.decorators.csrf import csrf_exempt
 
-def _compress_with_debug(input_pdf, output_pdf, target_kb):
-    qualities = [
-        "/screen",
-        "/ebook",
-        "/printer",
-        "/prepress"
-    ]
-
-    print("Starting Ghostscript compression attempts...")
-
-    best_size = float("inf")
-
-    for q in qualities:
-        print(f"→ Trying quality {q}")
-
-        try:
-            subprocess.run(
-                [
-                    "gs",
-                    "-sDEVICE=pdfwrite",
-                    "-dCompatibilityLevel=1.4",
-                    f"-dPDFSETTINGS={q}",
-                    "-dNOPAUSE",
-                    "-dQUIET",
-                    "-dBATCH",
-                    f"-sOutputFile={output_pdf}",
-                    input_pdf
-                ],
-                timeout=30
-            )
-
-            size_kb = os.path.getsize(output_pdf) // 1024
-            print(f"   Output size: {size_kb} KB")
-
-            best_size = min(best_size, size_kb)
-
-            if size_kb <= target_kb:
-                print("   ✅ Target achieved")
-                return
-
-        except Exception as e:
-            print("   ❌ Ghostscript error:", str(e))
-
-    print(f"⚠️ Target not achievable. Best possible: {best_size} KB")
-
 @csrf_exempt
-def compress_pdfs(request):
-    print("===== START PDF COMPRESSION =====")
+def pdf_compressor(request):
+    print("\n====== PDF COMPRESSOR HIT ======")
 
-    if request.method != "POST":
-        print("❌ Invalid request method")
-        return JsonResponse({"error": "Only POST allowed"}, status=405)
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request'}, status=400)
 
-    files = request.FILES.getlist("files")
-    target_kb = request.POST.get("targetSize")
+    uploaded_file = request.FILES.get('pdf_file')
+    level = request.POST.get('level', 1)
 
-    print(f"Received files: {len(files)} | Target KB: {target_kb}")
-
-    if not files:
-        print("❌ No files uploaded")
-        return JsonResponse({"error": "No files uploaded"}, status=400)
+    if not uploaded_file:
+        return JsonResponse({'error': 'No file uploaded'}, status=400)
 
     try:
-        target_kb = int(target_kb)
-        if target_kb < 10:
-            raise ValueError
-    except Exception:
-        print("❌ Invalid target size")
-        return JsonResponse({"error": "Invalid target size"}, status=400)
+        input_buffer = io.BytesIO(uploaded_file.read())
+        reader = PdfReader(input_buffer)
+        writer = PdfWriter()
 
-    gs_path = shutil.which("gs")
-    print(f"Ghostscript found: {bool(gs_path)}")
+        for i, page in enumerate(reader.pages):
+            print(f"Adding page {i+1}")
+            writer.add_page(page)
 
-    results = []
-    zip_buffer = io.BytesIO()
+            writer_page = writer.pages[-1]
+            print(f"Compressing page {i+1}")
+            writer_page.compress_content_streams()
 
-    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zipf:
-        for idx, pdf in enumerate(files, start=1):
-            print(f"\n--- Processing file #{idx}: {pdf.name} ---")
+        output_buffer = io.BytesIO()
+        writer.write(output_buffer)
+        pdf_data = output_buffer.getvalue()
 
-            if not pdf.name.lower().endswith(".pdf"):
-                print("⚠️ Skipped (not PDF)")
-                continue
+        print("✅ Compression done")
 
-            try:
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as in_f:
-                    in_f.write(pdf.read())
-                    input_path = in_f.name
+        return JsonResponse({
+            'status': 'success',
+            'name': uploaded_file.name,
+            'original_size': f"{uploaded_file.size / 1024:.1f}",
+            'new_size': f"{len(pdf_data) / 1024:.1f}",
+            'level': level,
+            'base64': base64.b64encode(pdf_data).decode('utf-8')
+        })
 
-                input_size_kb = os.path.getsize(input_path) // 1024
-                print(f"Original size: {input_size_kb} KB")
+    except Exception as e:
+        print("🔥 ERROR:", type(e).__name__, e)
+        return JsonResponse({'error': str(e)}, status=500)
 
-                output_path = input_path.replace(".pdf", "_compressed.pdf")
-
-                if gs_path:
-                    _compress_with_debug(
-                        input_path, output_path, target_kb
-                    )
-                else:
-                    print("⚠️ Ghostscript not installed, skipping compression")
-                    shutil.copy(input_path, output_path)
-
-                final_size_kb = max(1, os.path.getsize(output_path) // 1024)
-                print(f"Final size: {final_size_kb} KB")
-
-                with open(output_path, "rb") as f:
-                    pdf_bytes = f.read()
-
-                b64_pdf = base64.b64encode(pdf_bytes).decode()
-                safe_name = f"shrunk_{pdf.name}"
-
-                results.append({
-                    "file_name": safe_name,
-                    "size_kb": final_size_kb,
-                    "base64": f"data:application/pdf;base64,{b64_pdf}"
-                })
-
-                zipf.writestr(safe_name, pdf_bytes)
-
-            except Exception as e:
-                print("❌ ERROR processing file:", str(e))
-
-            finally:
-                for p in [input_path, output_path]:
-                    if p and os.path.exists(p):
-                        os.remove(p)
-
-    print("===== END PDF COMPRESSION =====\n")
-
-    zip_buffer.seek(0)
-    zip_b64 = base64.b64encode(zip_buffer.read()).decode()
-
-    return JsonResponse({
-        "files": results,
-        "zip_name": "compressed_pdfs.zip",
-        "zip_base64": f"data:application/zip;base64,{zip_b64}"
-    })

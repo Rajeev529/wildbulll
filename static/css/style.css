@@ -1322,3 +1322,79 @@ img { display: block; max-width: 100%; }
 }
 
 /* chatbox end */
+
+
+.upload-area {
+    border: 3px dashed #4a5a73; background-color: #1a3150;
+    padding: 50px 20px; text-align: center; border-radius: 12px;
+    cursor: pointer; transition: 0.3s; margin-bottom: 25px;
+}
+.upload-area:hover { border-color: var(--accent); background-color: #213a5c; }
+.upload-area p { margin: 10px 0; font-weight: 700; }
+
+/* --- BUTTONS --- */
+/* .btn {
+    background-color: var(--accent); color: var(--bg-dark); border: none;
+    padding: 12px 24px; border-radius: 8px; font-weight: 900;
+    cursor: pointer; transition: 0.3s; text-transform: uppercase;
+    display: inline-flex; align-items: center; justify-content: center;
+} */
+.btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+.btn-small { padding: 8px 15px; font-size: 0.8rem; }
+.btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+.btn:disabled { background: #4a5a73; cursor: not-allowed; transform: none; }
+
+/* --- RESULT LIST --- */
+.result-item {
+    background: #1a3150; border: 1px solid var(--border);
+    padding: 20px; border-radius: 10px; margin-bottom: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 15px;
+}
+.file-info { flex: 1; min-width: 200px; }
+.file-name { font-weight: 700; display: block; margin-bottom: 5px; }
+.file-stats { font-size: 0.85rem; color: var(--success); font-weight: 900; }
+.action-group { display: flex; gap: 10px; }
+
+/* --- LOADER --- */
+.loader {
+    display: none; text-align: center; margin: 20px 0; color: var(--accent);
+    font-weight: bold; font-style: italic;
+}
+
+/* Responsive Mobile */
+@media (max-width: 600px) {
+    .result-item { flex-direction: column; text-align: center; }
+    .action-group { width: 100%; flex-direction: column; }
+    .title { font-size: 1.8rem; }
+}
+
+.merge-list {
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.merge-item {
+    background: #1a3150;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 4px solid var(--accent);
+}
+.merge-item .order {
+    background: var(--accent);
+    color: var(--bg-dark);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 900;
+    margin-right: 15px;
+}
+.file-name-txt { flex: 1; font-size: 0.9rem; }

@@ -74,7 +74,7 @@ def compress_images(request):
                 "size_kb": final_size_kb,
                 "base64": f"data:image/jpeg;base64,{base64_data}",
             })
-            print(compressed_results)
+    
         return JsonResponse({"processed": compressed_results})
 
     return JsonResponse({"error": "Invalid request"}, status=400)
@@ -85,67 +85,50 @@ import io
 from django.http import JsonResponse, HttpResponse
 
 def images_to_pdf(request):
-    print("\n\n===== START images_to_pdf REQUEST =====")
 
     if request.method == "POST":
 
         image_list = []
         files = request.FILES.getlist('images')
 
-        print(f"Total Files Received: {len(files)}")
 
         for index, f in enumerate(files):
-            print(f"\n--- Processing Image #{index+1}: {f.name} ---")
 
             try:
                 img = Image.open(f)
-                print("Opened Image")
 
-                print("Original Mode:", img.mode)
-                print("Original Size:", img.size)
 
                 img.load()
-                print("Loaded Image into Memory")
 
                 img = ImageOps.exif_transpose(img)
-                print("Applied EXIF rotation")
 
                 # TRANSPARENCY + MODE FIX
                 if img.mode == "P":
-                    print("Palette Image Detected! Converting P → RGBA → RGB")
                     img = img.convert("RGBA").convert("RGB")
 
                 elif img.mode in ("RGBA", "LA"):
-                    print("Alpha Channel Detected! Removing transparency")
                     bg = Image.new("RGB", img.size, (255, 255, 255))
                     bg.paste(img, mask=img.split()[-1])
                     img = bg
 
                 else:
-                    print("Normal Image: Converting to RGB")
                     img = img.convert("RGB")
 
-                print("Final Mode:", img.mode)
 
                 # Copy image for safety
                 image_list.append(img.copy())
-                print("Image Added to List")
 
             except Exception as e:
-                print("ERROR WHILE PROCESSING IMAGE:", e)
                 return JsonResponse(
                     {"error": f"Image processing failed on {f.name}. Error: {str(e)}"},
                     status=500
                 )
 
-        print("\nAll images processed. Total valid images:", len(image_list))
 
         if not image_list:
-            print("No images present!")
             return JsonResponse({"error": "No valid images"}, status=400)
 
         try:
-            print("\n===== Creating PDF =====")
             pdf_bytes = io.BytesIO()
 
             image_list[0].save(
@@ -156,11 +139,9 @@ def images_to_pdf(request):
                 append_images=image_list[1:]
             )
 
-            print("PDF Saved Successfully")
 
             pdf_bytes.seek(0)
 
-            print("===== SENDING PDF TO USER =====")
             return HttpResponse(
                 pdf_bytes,
                 content_type="application/pdf",
@@ -168,14 +149,11 @@ def images_to_pdf(request):
             )
 
         except Exception as e:
-            print("ERROR DURING PDF CREATION:", e)
-            print("===== PDF CREATION FAILED =====")
             return JsonResponse(
                 {"error": f"Error generating PDF: {str(e)}"},
                 status=500
             )
 
-    print("Invalid request method")
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 
@@ -185,18 +163,15 @@ import io, base64
 
 
 def convert_to_scanned(request):
-    print("\n===== START convert_to_scanned REQUEST =====")
 
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
 
     files = request.FILES.getlist("images")
-    print(f"Total files received: {len(files)}")
 
     processed_images_data = []
 
     for idx, f in enumerate(files):
-        print(f"\n--- Processing Image #{idx+1}: {f.name} ---")
 
         try:
             # ==========================
@@ -261,16 +236,13 @@ def convert_to_scanned(request):
                 "base64": f"data:image/jpeg;base64,{encoded}"
             })
 
-            print(f"Image #{idx+1} processed successfully")
 
         except Exception as e:
-            print("ERROR:", e)
+           
             return JsonResponse(
-                {"error": f"Error processing {f.name}: {str(e)}"},
                 status=500
             )
 
-    print("\n===== ALL IMAGES PROCESSED SUCCESSFULLY =====")
 
     return JsonResponse({
         "images": processed_images_data
@@ -285,12 +257,10 @@ import io
 import base64
 
 def convert_image_extension(request):
-    print("\n===== START convert_image_extension REQUEST =====")
 
     if request.method == "POST":
         files = request.FILES.getlist("images")
         target_ext = request.POST.get("target_extension", "jpg").lower()
-        print(f"Total files: {len(files)}, Target extension: {target_ext}")
 
         # Validate target extension
         valid_ext = ["jpg", "png", "webp", "tiff"]
@@ -301,10 +271,8 @@ def convert_image_extension(request):
 
         for idx, f in enumerate(files):
             try:
-                print(f"\n--- Processing Image #{idx+1}: {f.name} ---")
                 img = Image.open(f)
                 img.load()
-                print("Original Mode:", img.mode, "Size:", img.size)
 
                 # Handle palette and alpha
                 if img.mode == "P":
@@ -315,7 +283,6 @@ def convert_image_extension(request):
                     img = bg
                 else:
                     img = img.convert("RGB")
-                print("Mode after conversion:", img.mode)
 
                 # Save to BytesIO in target format
                 img_bytes = io.BytesIO()
@@ -327,16 +294,12 @@ def convert_image_extension(request):
                     "file_name": f"File-{idx+1}.{target_ext}",
                     "base64": f"data:image/{target_ext};base64,{img_base64}"
                 })
-                print(f"Image #{idx+1} converted successfully")
 
             except Exception as e:
-                print(f"ERROR processing {f.name}: {e}")
                 return JsonResponse({"error": f"Error processing {f.name}: {str(e)}"}, status=500)
 
-        print("\nAll images converted successfully.")
         return JsonResponse({"images": processed_images})
 
-    print("Invalid request method")
     return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
@@ -352,7 +315,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def watermark_images(request):
-    print("\n===== START add_watermark_process REQUEST =====")
 
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request"}, status=400)
@@ -362,7 +324,6 @@ def watermark_images(request):
     wm_text = request.POST.get("watermark_text", "")
     wm_image_file = request.FILES.get("watermark_image")
 
-    print(f"Total Images: {len(files)} | Mode: {wm_mode}")
 
     processed_output = []
     zip_buffer = io.BytesIO()
@@ -372,7 +333,6 @@ def watermark_images(request):
     wm_png = None
     if wm_mode == "image" and wm_image_file:
         wm_png = Image.open(wm_image_file).convert("RGBA")
-        print("Watermark image loaded:", wm_png.size)
 
     # =============== YOU CAN CHANGE OPACITY HERE =================
     TEXT_OPACITY = 140  # 0 = fully transparent, 255 = fully dark
@@ -382,7 +342,6 @@ def watermark_images(request):
     # ============================================================
 
     for idx, f in enumerate(files):
-        print(f"\n--- Processing Image #{idx+1}: {f.name} ---")
 
         try:
             img = Image.open(f)
@@ -416,8 +375,6 @@ def watermark_images(request):
                 )
 
             else:
-                print("Applying PNG watermark...")
-
                 scale_factor = 0.25
                 new_w = int(img.width * scale_factor)
                 new_h = int((wm_png.height / wm_png.width) * new_w)
@@ -450,10 +407,8 @@ def watermark_images(request):
                 "base64": f"data:image/jpeg;base64,{encoded}"
             })
 
-            print(f"Image #{idx+1} processed successfully.")
 
         except Exception as e:
-            print("ERROR:", e)
             return JsonResponse({
                 "error": f"Error processing {f.name}: {str(e)}"
             }, status=500)
@@ -461,7 +416,6 @@ def watermark_images(request):
     zip_file.close()
     zip_b64 = base64.b64encode(zip_buffer.getvalue()).decode("utf-8")
 
-    print("\n===== ALL DONE SUCCESSFULLY =====")
 
     return JsonResponse({
         "images": processed_output,

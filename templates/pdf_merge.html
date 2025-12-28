@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="tool-card">
+            <div class="header">
+                <h1 class="title">Gorilla PDF Merger</h1>
+                <p class="subtitle">Bypass server limits. Merge large files instantly in your browser.</p>
+            </div>
+
+            <div class="upload-area" id="dropZone">
+                <p>Click or Drag PDFs to begin merging</p>
+                <input type="file" id="fileInput" multiple accept="application/pdf" style="display:none">
+            </div>
+
+            <div id="fileList" class="merge-list"></div>
+
+            <button class="btn" id="mergeBtn" disabled>Merge PDFs Now</button>
+
+            <div id="loader" class="loader">🦍 Gorilla is welding your PDFs locally...</div>
+
+            <div id="resultArea" style="display: none; border: 2px solid var(--success); padding: 30px; border-radius: 12px; text-align: center;">
+                <h2 style="color: var(--success);">Merging Complete!</h2>
+                <p id="sizeInfo" style="margin-bottom: 20px; font-size: 0.9rem;"></p>
+                <a id="downloadLink" href="#" download="merged_gorilla.pdf" class="btn" style="text-decoration: none;">Download Merged PDF</a>
+                <button onclick="location.reload()" class="btn btn-outline" style="margin-top:10px; font-size: 0.8rem;">Start Over</button>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'script/pdf_merge.js' %}" ></script>
+    {% endblock %}

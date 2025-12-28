@@ -1,50 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
     <div class="container">
         <div class="tool-card">
-            <h1 class="title">PDF Compressor</h1>
-            <p class="subtitle">Bulk compress multiple PDFs to a specific target size.</p>
-
-            <div class="upload-box" id="dropZone">
-                <p style="font-size: 1.1em; margin: 0;">📄 Drop multiple PDFs here or click to browse</p>
-                <div id="fileNames" class="file-list-preview"></div>
-                <input type="file" id="fileInput" accept="application/pdf" multiple style="display:none">
+            <div class="header">
+                <h1 class="title">PDF Compressor</h1>
+                <p class="subtitle">Compress Bulk PDFs iteratively until satisfied.</p>
             </div>
 
-            <div class="settings-grid">
-                <div class="input-group">
-                    <label for="targetSize">Target Size (KB) per file:</label>
-                    <input type="number" id="targetSize" value="500" min="10">
+            <div class="upload-area" id="dropZone">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff9933" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                </svg>
+                <p>Drag & Drop PDFs or Click to Browse</p>
+                <input type="file" id="fileInput" multiple accept="application/pdf" style="display:none">
+            </div>
+
+            <div id="loader" class="loader">Tool Gorilla is crunching your data...</div>
+
+            <div id="resultsList">
                 </div>
-                <div class="input-group">
-                    <label>Optimization Mode:</label>
-                    <input type="text" value="High Compression" disabled style="opacity: 0.6;">
-                </div>
-            </div>
-
-            <button class="btn" id="processBtn" disabled>Compress All PDFs</button>
-
-            <div id="loader" style="display:none; text-align: center; margin-top: 20px;">
-                <div class="loading-spinner"></div>
-                <p id="statusMsg" style="font-size: 0.9em; color: #ccc;">Starting process...</p>
-            </div>
-
-            <div id="resultSection">
-                <div class="result-header">
-                    <h3 style="color: #ff9933; margin: 0;">Compressed Results</h3>
-                    <button id="downloadAllBtn" class="btn btn-zip" style="display: none;">
-                        📦 Download All (.ZIP)
-                    </button>
-                </div>
-                
-                <div id="resultsList"></div>
-                
-                <button class="btn" style="background:#4a5a73; margin-top: 20px;" onclick="location.reload()">
-                    Clear & Start Over
-                </button>
-            </div>
         </div>
     </div>
     <script src="{% static 'script/pdf_shrink.js' %}" ></script>
-    {% endblock %}
+{% endblock %}
