@@ -23,6 +23,8 @@ urlpatterns = [
     path("pdf-compressor",views.pdf_shrink),
     path("compress-pdf/", pdf.pdf_compressor),
     path("pdf-merge",views.merge_pdf),
+    path("scan-pdf-ajax/", pdf.scan_pdf_ajax),
+    path("scan-pdf",views.scan_pdf),
     # path("chat-process/", chat.process_text_view),
 
 ]

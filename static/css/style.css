@@ -1398,3 +1398,32 @@ img { display: block; max-width: 100%; }
     margin-right: 15px;
 }
 .file-name-txt { flex: 1; font-size: 0.9rem; }
+/* Styling to match the tool-card pattern */
+
+
+
+.action-group a {
+    background: #ff9933;
+    color: #0b1c31;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.gorilla-btn {
+    background: #ff9933;
+    color: #0b1c31;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gorilla-btn:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+}

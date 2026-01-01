@@ -49,3 +49,54 @@ def pdf_compressor(request):
         print("🔥 ERROR:", type(e).__name__, e)
         return JsonResponse({'error': str(e)}, status=500)
 
+
+
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse, JsonResponse
+from PIL import Image, ImageEnhance, ImageFilter
+import io
+
+@require_POST
+def scan_pdf_ajax(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    images = request.FILES.getlist("images")
+    scanned_pages = []
+
+    try:
+        for f in images:
+            img = Image.open(f).convert("L")
+
+            # Scan effect
+            img = ImageEnhance.Contrast(img).enhance(1.9)
+            img = ImageEnhance.Brightness(img).enhance(1.05)
+            img = img.filter(ImageFilter.UnsharpMask(radius=2, percent=180))
+            img = img.point(lambda x: 0 if x < 150 else 255, "1")
+
+            scanned_pages.append(img.convert("RGB"))
+
+        if not scanned_pages:
+            return JsonResponse({"error": "No images"}, status=400)
+
+        # 🔥 CREATE PDF IN MEMORY
+        pdf_buffer = io.BytesIO()
+        scanned_pages[0].save(
+            pdf_buffer,
+            format="PDF",
+            save_all=True,
+            append_images=scanned_pages[1:]
+        )
+        pdf_buffer.seek(0)
+
+        # 🔥 STREAM RESPONSE
+        response = HttpResponse(
+            pdf_buffer.read(),
+            content_type="application/pdf"
+        )
+        response["Content-Disposition"] = 'attachment; filename="scanned.pdf"'
+        return response
+
+    except Exception as e:
+        print("SCAN ERROR:", e)
+        return JsonResponse({"error": "Scan failed"}, status=500)

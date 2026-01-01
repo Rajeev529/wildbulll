@@ -33,3 +33,5 @@ def pdf_shrink(request):
     return render(request, 'pdf_shrink.html')
 def merge_pdf(request):
     return render(request, 'pdf_merge.html')
+def scan_pdf(request):
+    return render(request, 'pdf_scan.html')

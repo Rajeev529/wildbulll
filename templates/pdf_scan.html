@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="tool-card">
+            <div class="header">
+                <h1 class="title">PDF Scanner Pro</h1>
+                <p class="subtitle">Give your digital PDFs an authentic scanned look and feel.</p>
+            </div>
+
+            <div class="upload-area" id="dropZone">
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#ff9933" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+                </svg>
+                <p>Drag &amp; Drop PDFs to Scan or Click to Browse</p>
+                <input type="file" id="fileInput" multiple accept="application/pdf" style="display:none">
+            </div>
+
+            <div id="loader" class="loader" style="display: none;">
+                please wait... your file may be large
+            </div>
+
+            <div id="resultsList">
+                </div>
+            
+            <div id="action-bar" style="display: none; margin-top: 20px; text-align: center;">
+                <button class="gorilla-btn" id="processBtn" onclick="startScanning()">🚀 Process All Files</button>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'script/pdf_scan.js' %}" ></script>
+{% endblock %}
