@@ -17,6 +17,10 @@
   ],
   "routes": [
     {
+      "src": "/sitemap.xml",
+      "dest": "/staticfiles/sitemap.xml"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/staticfiles/$1"
     },
